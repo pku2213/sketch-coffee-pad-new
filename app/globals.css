@@ -1,0 +1,247 @@
+@import "tailwindcss";
+
+/*
+ * ============================================================
+ *  Sketch Coffee · Design tokens & skins (v7)
+ *  所有颜色都通过 CSS 变量定义，切换皮肤 = 切换 <html data-theme="...">
+ *  Tailwind 用法：bg-canvas / bg-panel / bg-sunken / text-ink / text-ink/50
+ *               bg-brand text-brand-fg / text-accent / border-line / bg-ok / bg-danger
+ * ============================================================
+ */
+
+@theme inline {
+  --color-canvas: var(--c-canvas);
+  --color-panel: var(--c-panel);
+  --color-sunken: var(--c-sunken);
+  --color-sunken-2: var(--c-sunken-2);
+  --color-ink: var(--c-ink);
+  --color-muted: var(--c-muted);
+  --color-line: var(--c-line);
+  --color-brand: var(--c-brand);
+  --color-brand-fg: var(--c-brand-fg);
+  --color-accent: var(--c-accent);
+  --color-ok: var(--c-ok);
+  --color-danger: var(--c-danger);
+  --color-hot: var(--c-hot);
+  --color-cold: var(--c-cold);
+  --font-sans: var(--font-geist-sans), "PingFang SC", "HarmonyOS Sans SC", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+  --font-serif: "Noto Serif SC", "Source Han Serif SC", "Songti SC", serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+}
+
+/* ---------- 皮肤 1：拿铁（默认，原配色） ---------- */
+:root,
+:root[data-theme="latte"] {
+  --c-canvas: #f7f4ee;
+  --c-panel: #ffffff;
+  --c-sunken: #efe9df;
+  --c-sunken-2: #e6dfd2;
+  --c-ink: #4a3728;
+  --c-muted: #9b8f84;
+  --c-line: #e7e1d8;
+  --c-brand: #4a3728;
+  --c-brand-fg: #ffffff;
+  --c-accent: #d98a3a;
+  --c-ok: #3f9b62;
+  --c-danger: #d6503f;
+  --c-hot: #e0782f;
+  --c-cold: #3b82c4;
+  --c-shadow: var(--c-ink);
+  color-scheme: light;
+}
+
+/* ---------- 皮肤 2：抹茶 ---------- */
+:root[data-theme="matcha"] {
+  --c-canvas: #f3f5ee;
+  --c-panel: #ffffff;
+  --c-sunken: #e5ebdb;
+  --c-sunken-2: #d8e0cb;
+  --c-ink: #2f3d2a;
+  --c-muted: #86917d;
+  --c-line: #dfe5d5;
+  --c-brand: #4f6b3a;
+  --c-brand-fg: #ffffff;
+  --c-accent: #b0913a;
+  --c-ok: #3f8f55;
+  --c-danger: #c8553d;
+  --c-hot: #d8793a;
+  --c-cold: #3f86b5;
+  --c-shadow: var(--c-ink);
+  color-scheme: light;
+}
+
+/* ---------- 皮肤 3：海盐 ---------- */
+:root[data-theme="seasalt"] {
+  --c-canvas: #f1f4f7;
+  --c-panel: #ffffff;
+  --c-sunken: #e2e9f0;
+  --c-sunken-2: #d4dee8;
+  --c-ink: #1f3447;
+  --c-muted: #7f8fa0;
+  --c-line: #dde4eb;
+  --c-brand: #2d5b7f;
+  --c-brand-fg: #ffffff;
+  --c-accent: #e07a5f;
+  --c-ok: #2f9a74;
+  --c-danger: #d14b4b;
+  --c-hot: #e0763a;
+  --c-cold: #2f7fc0;
+  --c-shadow: var(--c-ink);
+  color-scheme: light;
+}
+
+/* ---------- 皮肤 4：焦糖（暖、低饱和） ---------- */
+:root[data-theme="caramel"] {
+  --c-canvas: #faf6f0;
+  --c-panel: #ffffff;
+  --c-sunken: #f2e8da;
+  --c-sunken-2: #e8dac6;
+  --c-ink: #3d2a1c;
+  --c-muted: #9c8670;
+  --c-line: #eee2d2;
+  --c-brand: #a0612d;
+  --c-brand-fg: #ffffff;
+  --c-accent: #c9822f;
+  --c-ok: #4a8f5c;
+  --c-danger: #c8503e;
+  --c-hot: #d9742f;
+  --c-cold: #3f7fb8;
+  --c-shadow: var(--c-ink);
+  color-scheme: light;
+}
+
+/* ---------- 皮肤 5：石墨（黑白极简） ---------- */
+:root[data-theme="graphite"] {
+  --c-canvas: #f4f4f3;
+  --c-panel: #ffffff;
+  --c-sunken: #ebebea;
+  --c-sunken-2: #dfdfdd;
+  --c-ink: #1f1f1f;
+  --c-muted: #8a8a88;
+  --c-line: #e3e3e1;
+  --c-brand: #262626;
+  --c-brand-fg: #ffffff;
+  --c-accent: #c98a2e;
+  --c-ok: #3c8c5a;
+  --c-danger: #cc4a3c;
+  --c-hot: #d4722e;
+  --c-cold: #3a7bbd;
+  --c-shadow: #000000;
+  color-scheme: light;
+}
+
+/* ---------- 皮肤 6：深夜浓缩（深色） ---------- */
+:root[data-theme="espresso"] {
+  --c-canvas: #16110d;
+  --c-panel: #221a15;
+  --c-sunken: #1c1611;
+  --c-sunken-2: #2b221b;
+  --c-ink: #f1e6d8;
+  --c-muted: #9d8f81;
+  --c-line: #33291f;
+  --c-brand: #d9a066;
+  --c-brand-fg: #1b140f;
+  --c-accent: #e9b872;
+  --c-ok: #5cc28a;
+  --c-danger: #f06a5a;
+  --c-hot: #f0925a;
+  --c-cold: #6fb0e8;
+  --c-shadow: #000000;
+  color-scheme: dark;
+}
+
+/*
+ * 自适应缩放：Tailwind 的尺寸都基于 rem，
+ * 让根字号随屏幕宽度平滑变化 → 整个界面按比例缩放，不会出现"大小失配"。
+ *   竖屏 800px = 14px（下限），横屏 1280px ≈ 16px，大屏封顶 18px
+ */
+@layer base {
+  html {
+    font-size: clamp(14px, calc(10px + 0.47vw), 18px);
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    background: var(--c-canvas);
+  }
+
+  body {
+    background: var(--c-canvas);
+    color: var(--c-ink);
+    font-family: var(--font-sans);
+    overscroll-behavior: none;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation; /* 禁止双击放大 */
+  }
+
+  button,
+  [role="button"] {
+    touch-action: manipulation;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+}
+
+/* ---------- 滚动条 ---------- */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--c-ink) 18%, transparent) transparent;
+}
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--c-ink) 18%, transparent);
+  border-radius: 999px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* ---------- 动画（原代码使用的 animate-in 系列没有插件支持，这里自己定义） ---------- */
+@keyframes sc-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes sc-pop {
+  from { opacity: 0; transform: scale(0.96) translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes sc-rise {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes sc-drop {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: none; }
+}
+.anim-fade { animation: sc-fade 0.18s ease-out both; }
+.anim-pop { animation: sc-pop 0.2s cubic-bezier(0.2, 0.9, 0.3, 1.2) both; }
+.anim-rise { animation: sc-rise 0.3s ease-out both; }
+.anim-drop { animation: sc-drop 0.2s ease-out both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .anim-fade, .anim-pop, .anim-rise, .anim-drop { animation: none; }
+}
+
+/* 卡片的统一阴影（阴影色随皮肤变化） */
+.shadow-card {
+  box-shadow: 0 1px 2px color-mix(in srgb, var(--c-shadow) 6%, transparent),
+    0 4px 16px -6px color-mix(in srgb, var(--c-shadow) 12%, transparent);
+}
+.shadow-float {
+  box-shadow: 0 10px 40px -10px color-mix(in srgb, var(--c-shadow) 40%, transparent);
+}
+
+/* 整个应用外壳：用"动态视口高度"，平板浏览器的地址栏/工具栏不会再挡住底部 */
+.app-shell {
+  height: 100vh;
+  height: 100dvh;
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+}
