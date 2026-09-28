@@ -23,8 +23,12 @@ export default function Sidebar({ onOpenSettings }: { onOpenSettings: () => void
   const pathname = usePathname();
   const status = useSyncStatus();
   const pending = useLiveQuery(() => countUnsynced(), [], 0);
-  // 补货：还没@舒舒的缺货数量
-  const missingCount = useLiveQuery(() => db.restock.where("status").equals("missing").count(), [], 0);
+  // 补货：正在缺货的原料数量
+  const missingCount = useLiveQuery(
+    async () => new Set((await db.restock.filter(r => r.status !== "arrived").toArray()).map(r => r.item)).size,
+    [],
+    0,
+  );
 
   const handleSyncClick = async () => {
     if (!status.online) {

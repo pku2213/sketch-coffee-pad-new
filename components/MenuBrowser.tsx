@@ -165,7 +165,7 @@ export default function MenuBrowser({
           </div>
         </header>
 
-        <div className="px-4 pb-8 pt-1 grid gap-2 grid-cols-[repeat(auto-fill,minmax(8.25rem,1fr))]">
+           <div className="px-4 pb-8 pt-1 grid gap-2 grid-cols-5">
           {searching
             ? hits.map(h => card(h.item, h.reason, true))
             : items.map(item => card(item, undefined, !activeSub && !!subCategories))}

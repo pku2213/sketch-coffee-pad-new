@@ -1,5 +1,5 @@
 import Dexie, { type EntityTable } from 'dexie';
-import { DEFAULT_MENU, DAILY_CHECKLIST, DEEP_CLEAN_LIST } from '../constants';
+import { DEFAULT_MENU, DAILY_CHECKLIST, DEEP_CLEAN_LIST, DEFAULT_SUPPLIES } from '../constants';
 import { MenuItem } from '../types';
 
 /**
@@ -7,6 +7,7 @@ import { MenuItem } from '../types';
  * v1: menu / orders / duty
  * v2 [v7]: 新增 meta 表（订单号累计计数器、同步时间等键值）
  * v3 [v7.1]: 新增 restock 表（缺货补货，只存本地）
+ * v4 [v7.2]: 新增 supplies 表（原料清单：饮品 / 食品 / 用品 / 其他，可自行添加）
  */
 
 export interface OrderTable {
@@ -62,6 +63,14 @@ export interface RestockTable {
   arrivedBy?: string;
 }
 
+/** [v7.2] 原料清单（补货页用） */
+export interface SupplyTable {
+  id?: number;
+  name: string;
+  category: string;
+  createdAt?: Date;
+}
+
 export interface MetaTable {
   key: string;
   value: unknown;
@@ -73,6 +82,7 @@ export class SketchCoffeeDB extends Dexie {
   duty!: EntityTable<DutyTable, 'id'>;
   meta!: EntityTable<MetaTable, 'key'>;
   restock!: EntityTable<RestockTable, 'id'>;
+  supplies!: EntityTable<SupplyTable, 'id'>;
 
   constructor() {
     super('SketchCoffeeDB');
@@ -100,6 +110,30 @@ export class SketchCoffeeDB extends Dexie {
       restock: '++id, item, status, createdAt',
     });
 
+    // [v7.2] 新增原料清单表，升级时自动写入默认原料
+    this.version(4)
+      .stores({
+        menu: '++id, name, category',
+        orders: '++id, orderId, timestamp, isSynced, status',
+        duty: '++id, type',
+        meta: 'key',
+        restock: '++id, item, status, createdAt',
+        supplies: '++id, &name, category',
+      })
+      .upgrade(async tx => {
+        const defaults = defaultSupplyRows();
+        const known = new Set(defaults.map(d => d.name));
+        // 以前手动登记过、但不在默认清单里的原料，放进"其他"
+        const extra = new Set<string>();
+        await tx.table('restock').each((r: RestockTable) => {
+          if (r.item && !known.has(r.item)) extra.add(r.item);
+        });
+        await tx.table('supplies').bulkAdd([
+          ...defaults,
+          ...Array.from(extra).map(name => ({ name, category: '其他', createdAt: new Date() })),
+        ]);
+      });
+
     this.on('populate', () => {
       // 首次打开：先用代码里的默认菜单/清单兜底（离线也能用），联网后会自动从飞书刷新
       this.menu.bulkAdd(DEFAULT_MENU);
@@ -109,8 +143,16 @@ export class SketchCoffeeDB extends Dexie {
         ...DEEP_CLEAN_LIST.map(item => ({ ...item, type: 'DEEP' as const })),
       ];
       this.duty.bulkAdd(dutyData);
+      this.supplies.bulkAdd(defaultSupplyRows());
     });
   }
+}
+
+function defaultSupplyRows(): SupplyTable[] {
+  const now = new Date();
+  return Object.entries(DEFAULT_SUPPLIES).flatMap(([category, names]) =>
+    names.map(name => ({ name, category, createdAt: now })),
+  );
 }
 
 export const db = new SketchCoffeeDB();
